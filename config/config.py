@@ -1,5 +1,4 @@
 import os
-
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY','default_secret')
     FLASK_ADMIN_SWATCH = 'yeti'
@@ -13,7 +12,12 @@ class Config:
         db_type = os.getenv('DB_TYPE','sqlite')
         
         if db_type == "mysql":
-            return os.getenv('MYSQL_URL')
+            MYSQL_USER = os.getenv('MYSQL_USER', 'root')
+            MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD', '')
+            MYSQL_HOST = os.getenv('MYSQL_HOST', 'localhost')
+            MYSQL_PORT = os.getenv('MYSQL_PORT', '3306')
+            MYSQL_DB = os.getenv('MYSQL_DATABASE', 'mydb')
+            return f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
         
         else:
             return 'sqlite:///usersdb.sqlite3'
