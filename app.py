@@ -4,7 +4,7 @@ from flask_admin import Admin
 from models.models import db, Profile
 from views.profile_view import profile_bp,ProfileView,auth
 from config.config import Config
-from werkzeug.security import generate_password_hash
+
 
 app = Flask("Comp Dist")
 app.config.from_object(Config)
@@ -19,7 +19,7 @@ app.register_blueprint(profile_bp)
 with app.app_context():
     db.create_all()  # Criar tabelas no banco de dados
     if not Profile.query.filter_by(username=Config.ADMIN_USERNAME).first():
-        admin = Profile(username=Config.ADMIN_USERNAME, password=generate_password_hash(Config.ADMIN_PASSWORD))
+        admin = Profile(username=Config.ADMIN_USERNAME, password=Config.ADMIN_PASSWORD)
         db.session.add(admin)
         db.session.commit()
 
