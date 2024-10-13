@@ -1,5 +1,1 @@
-# Exclude Python cache directories
-**/__pycache__/
-/instance/
-# Exclude environment files
-*.env
+.git
