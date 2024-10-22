@@ -1,9 +1,10 @@
-from flask import Flask,request
+from flask import Flask,request,redirect,url_for
 from flask_migrate import Migrate
 from flask_admin import Admin
 from models.models import db, Profile
 from views.profile_view import profile_bp,ProfileView,auth
 from config.config import Config
+from services.auth_service import verify_admin
 
 
 app = Flask("Comp Dist")
@@ -30,12 +31,13 @@ adminPage = Admin(app, name='Super App', template_mode='bootstrap4')
 adminPage.add_view(ProfileView(Profile, db.session, endpoint="admin_profile"))
 
 # Adicionando autenticação na rota /admin
-@app.before_request
-@auth.login_required
-def before_request():
-    if request.endpoint == 'admin.index' and not auth.current_user():
-        return auth.login_required()
 
+@app.before_request
+def before_request():
+    if request.endpoint == 'admin.index':
+        auth_header = request.authorization
+        if not auth_header or not verify_admin(auth_header.username, auth_header.password):
+            return redirect(url_for('profile.index'))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)

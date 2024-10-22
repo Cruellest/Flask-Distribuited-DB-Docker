@@ -18,14 +18,7 @@ def index():
         return jsonify({"success": f"Usuário {user.username} acessou o index."})
     return jsonify({"error": "Usuário não encontrado"}), 404
 
-class AuthAdminMixin:
-    def is_accessible(self):
-        return auth.current_user() is not None
-
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('auth.login'))
-
-class ProfileView(AuthAdminMixin, ModelView):
+class ProfileView(ModelView):
     column_exclude_list = ['password', ]
     column_searchable_list = ['username', ]
     can_export = True
