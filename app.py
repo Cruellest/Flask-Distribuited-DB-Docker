@@ -1,3 +1,4 @@
+import logging
 from flask import Flask,request,redirect,url_for
 from flask_migrate import Migrate
 from flask_admin import Admin
@@ -6,6 +7,9 @@ from views.profile_view import profile_bp,ProfileView,auth
 from config.config import Config
 from services.auth_service import verify_admin
 
+# Application log
+logging.basicConfig(format='%(asctime)s - %(message)s', filename="log/app.log", level=logging.INFO)
+log = logging.getLogger()
 
 app = Flask("Comp Dist")
 app.config.from_object(Config)
