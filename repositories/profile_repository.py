@@ -9,9 +9,3 @@ def create_user(username, password):
     db.session.add(new_user)
     db.session.commit()
     return new_user
-
-class ProfileView():
-    column_exclude_list = ['password', ]
-    column_searchable_list = ['username', ]
-    can_export = True
-    can_view_details = True

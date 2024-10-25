@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, redirect, url_for
+from flask import Blueprint, jsonify
 from flask_httpauth import HTTPBasicAuth
 from services.auth_service import verify_password
 from flask_admin.contrib.sqla import ModelView
